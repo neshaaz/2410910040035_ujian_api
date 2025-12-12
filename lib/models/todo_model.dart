@@ -38,10 +38,10 @@ class TodoModel {
 
   factory TodoModel.fromMap(Map<String, dynamic> map) {
     return TodoModel(
-      id: map['id']?.toInt() ?? 0,
-      todo: map['todo'] ?? '',
-      completed: map['completed'] ?? false,
-      userId: map['userId']?.toInt() ?? 0,
+      id: map['id'] is int ? map['id'] : (map['id'] is num ? (map['id'] as num).toInt() : 0),
+      todo: map['todo']?.toString() ?? '',
+      completed: map['completed'] is bool ? map['completed'] : false,
+      userId: map['userId'] is int ? map['userId'] : (map['userId'] is num ? (map['userId'] as num).toInt() : 0),
     );
   }
 

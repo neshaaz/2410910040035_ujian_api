@@ -43,11 +43,11 @@ class UserModel {
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-      id: map['id']?.toInt() ?? 0,
-      firstName: map['firstName'] ?? '',
-      lastName: map['lastName'] ?? '',
-      age: map['age']?.toInt() ?? 0,
-      email: map['email'] ?? '',
+      id: map['id'] is int ? map['id'] : (map['id'] is num ? (map['id'] as num).toInt() : 0),
+      firstName: map['firstName']?.toString() ?? '',
+      lastName: map['lastName']?.toString() ?? '',
+      age: map['age'] is int ? map['age'] : (map['age'] is num ? (map['age'] as num).toInt() : 0),
+      email: map['email']?.toString() ?? '',
     );
   }
 

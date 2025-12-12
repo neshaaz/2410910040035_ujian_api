@@ -39,7 +39,8 @@ class _TodoPageState extends State<TodoPage> {
       appBar: AppBar(
         backgroundColor: const Color(0xff6A4BBC),
         elevation: 0,
-        title: const Text("Todo List"),
+        title: const Text("Todo List", 
+        style: TextStyle(color: Colors.white)),
       ),
 
       body: isLoading

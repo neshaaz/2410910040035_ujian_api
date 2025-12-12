@@ -32,14 +32,38 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void submit() async {
+    // Validate form fields before submission
+    if (firstNameCtrl.text.trim().isEmpty ||
+        lastNameCtrl.text.trim().isEmpty ||
+        ageCtrl.text.trim().isEmpty ||
+        emailCtrl.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Semua field harus diisi")),
+      );
+      return;
+    }
+
+    int? age;
+    try {
+      age = int.parse(ageCtrl.text.trim());
+      if (age <= 0) {
+        throw FormatException("Umur harus lebih dari 0");
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Umur harus berupa angka yang valid")),
+      );
+      return;
+    }
+
     setState(() => isLoading = true);
 
     try {
       UserModel user = await api.registerUser(
-        firstName: firstNameCtrl.text,
-        lastName: lastNameCtrl.text,
-        age: int.parse(ageCtrl.text),
-        email: emailCtrl.text,
+        firstName: firstNameCtrl.text.trim(),
+        lastName: lastNameCtrl.text.trim(),
+        age: age,
+        email: emailCtrl.text.trim(),
       );
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -53,7 +77,7 @@ class _RegisterPageState extends State<RegisterPage> {
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Registrasi gagal")),
+        SnackBar(content: Text("Registrasi gagal: ${e.toString()}")),
       );
     }
 
